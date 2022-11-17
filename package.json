@@ -1,0 +1,18 @@
+{
+  "name": "flight-ticket",
+  "version": "1.0.0",
+  "description": "This is flight ticket booking app",
+  "main": "server.js",
+  "scripts": {
+    "server": "nodemon backend/server.js"
+  },
+  "author": "subhadip_das",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^6.7.2"
+  }
+}
