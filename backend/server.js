@@ -17,6 +17,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to flight ticket API" });
 });
 
+app.use("/api/users", require("./routes/userRouter"));
 app.use("/api/flights", require("./routes/flightRouter"));
 app.use(errorHandler);
 
