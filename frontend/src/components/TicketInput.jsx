@@ -8,7 +8,7 @@ function TicketInput({ location, onChangeFn, allLocation, label }) {
   const inputBg = "#F2D7D9";
   return (
     <div
-      className="flex flex-col my-6 border-[1px] border-[rgba(0,0,0,0.1)] p-2 rounded-md relative"
+      className="flex flex-col my-3 border-[1px] border-[rgba(0,0,0,0.1)] p-2 rounded-md relative"
       onClick={() => setShowOptions((prev) => !prev)}
       style={
         showOptions ? { backgroundColor: inputBg } : { backgroundColor: "#fff" }

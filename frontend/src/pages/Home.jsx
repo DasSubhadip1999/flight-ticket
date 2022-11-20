@@ -9,6 +9,7 @@ function Home() {
   const { locations, isError, isSuccess, isLoading } = useSelector(
     (state) => state.location
   );
+  const { user } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -27,9 +28,50 @@ function Home() {
 
   if (isSuccess) {
     return (
-      <section className="px-4">
-        <TicketBook locations={locations} />
-      </section>
+      <>
+        {user && (
+          <section className="px-4 my-2">
+            <h1 className="text-xl font-bold text-[rgba(0,0,0,0.7)]">
+              Profile:
+            </h1>
+            <hr />
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="text-md font-bold text-[rgba(0,0,0,0.7)]">
+                  Name:
+                </span>
+              </label>
+              <input
+                type="text"
+                name="name"
+                className="input input-bordered w-full max-w-xs capitalize font-bold"
+                value={user.name}
+                disabled
+              />
+            </div>
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="text-md font-bold text-[rgba(0,0,0,0.7)]">
+                  Email:
+                </span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                className="input input-bordered w-full max-w-xs"
+                value={user.email}
+                disabled
+              />
+            </div>
+          </section>
+        )}
+        <section className="px-4">
+          <h1 className="text-xl font-bold text-[rgba(0,0,0,0.7)]">
+            Book Ticket:
+          </h1>
+          <TicketBook locations={locations} />
+        </section>
+      </>
     );
   }
 }

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { register, reset } from "../features/auth/authSlice";
+import Spinner from "../components/Spinner";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -12,7 +13,7 @@ function Register() {
     password2: "",
   });
   const { name, email, password, password2 } = formData;
-  const { isError, isSuccess, message, user } = useSelector(
+  const { isError, isSuccess, isLoading, message, user } = useSelector(
     (state) => state.auth
   );
   const dispatch = useDispatch();
@@ -21,6 +22,9 @@ function Register() {
   useEffect(() => {
     if (isError) {
       toast.error(message);
+      if (message === "User already exists") {
+        navigate("/login");
+      }
     }
     if (isSuccess && user) {
       toast.success("Register successfully");
@@ -52,6 +56,10 @@ function Register() {
       });
     }
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   //
   return (

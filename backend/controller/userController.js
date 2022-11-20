@@ -49,13 +49,6 @@ const registerUser = asyncHandler(async (req, res, next) => {
   }
 });
 
-//siging the jwt token
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "30d",
-  });
-};
-
 //login user
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -64,8 +57,6 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   //match password
-  const val = await bcrypt.compare(password, user.password);
-
   if (user && (await bcrypt.compare(password, user.password))) {
     const { _id, name, email } = user;
     res.status(200).json({
@@ -79,6 +70,13 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error("Wrong email id or password");
   }
 });
+
+//siging the jwt token
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
+};
 
 module.exports = {
   registerUser,
