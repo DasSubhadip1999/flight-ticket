@@ -19,6 +19,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", require("./routes/userRouter"));
 app.use("/api/flights", require("./routes/flightRouter"));
+app.use("/api/flights/airlines", require("./routes/airlineRouter"));
 app.use(errorHandler);
 
 app.listen(PORT, () => {
