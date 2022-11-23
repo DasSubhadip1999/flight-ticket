@@ -1,23 +1,40 @@
 import React from "react";
 
-function EachTicket() {
+function EachTicket({
+  ticket: {
+    _id,
+    airport,
+    date,
+    from,
+    to,
+    arrivalTime,
+    departureTime,
+    singlePrice,
+    totalAmount,
+  },
+}) {
   return (
-    <>
-      <h1>Ticket ID:</h1>
-      <h1>Airport Name</h1>
-      <h2>Date: </h2>
-      <ul className="flex justify-between my-2">
-        <li>Delhi</li>
+    <div className="mb-4 shadow-md p-3 rounded-md">
+      <h1 className="my-1 font-semibold">Ticket ID:</h1>
+      <p>{_id}</p>
+      <h1 className="my-1 font-semibold">Airport Name:</h1>
+      <p className="capitalize">{airport}</p>
+      <h2 className="flex items-center">
+        <p className="my-1 font-semibold mr-1">Date:</p>{" "}
+        {new Date(date).toLocaleDateString()}
+      </h2>
+      <ul className="flex justify-between my-1">
+        <li className="uppercase">{from}</li>
         <li>to</li>
-        <li>Mumbai</li>
+        <li className="uppercase">{to}</li>
       </ul>
-      <ul className="flex justify-between my-2">
-        <li>6.00</li>
+      <ul className="flex justify-between my-1">
+        <li>{new Date(departureTime).toLocaleTimeString()}</li>
         <li>to</li>
-        <li>9.00</li>
+        <li>{new Date(arrivalTime).toLocaleTimeString()}</li>
       </ul>
-      <div>Seats:</div>
-    </>
+      <div>Seats: {totalAmount / singlePrice}</div>
+    </div>
   );
 }
 

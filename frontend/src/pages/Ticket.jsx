@@ -1,10 +1,11 @@
 import { Heading } from "@chakra-ui/react";
+import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import SpinnerElm from "../components/Spinner";
-import { createTicket, reset } from "../features/ticket/ticketSlice";
+import { createTicket, getTicket, reset } from "../features/ticket/ticketSlice";
 
 function Ticket() {
   const { airline, isLoading } = useSelector((state) => state.airline);
@@ -12,6 +13,7 @@ function Ticket() {
     tickets,
     isError,
     isSuccess,
+    message,
     isLoading: ticketLoading,
   } = useSelector((state) => state.ticket);
   const [count, setCount] = useState(1);
@@ -23,7 +25,9 @@ function Ticket() {
     return _id === params.ticket;
   });
 
-  const [{ location, price }] = data;
+  //console.log(data);
+
+  const [{ location, price, arrival, departure }] = data;
 
   let LC_location = JSON.parse(localStorage.getItem("location"));
 
@@ -37,9 +41,12 @@ function Ticket() {
     totalAmount: total,
     airport: LC_location.from.airport,
     terminal: Math.floor(Math.random() * 10 + 1),
+    arrivalTime: arrival,
+    departureTime: departure,
   });
 
-  const { date, from, to, singlePrice, airport } = formData;
+  const { date, from, to, singlePrice, airport, arrivalTime, departureTime } =
+    formData;
 
   const calculate = (val) => {
     setCount((prev) => prev + val);
@@ -49,7 +56,9 @@ function Ticket() {
     e.preventDefault();
     //console.log(formData);
     dispatch(createTicket(formData));
-    navigate("/account");
+    toast.success("Ticket booked succesfully");
+    dispatch(getTicket());
+    navigate("/");
   };
 
   useEffect(() => {
@@ -80,7 +89,7 @@ function Ticket() {
 
   return (
     <>
-      <BackButton url="/airlines" />
+      <BackButton url="/" />
 
       <div className="px-3 mt-4">
         <form className="mt-2" onSubmit={onSubmit}>
@@ -97,6 +106,20 @@ function Ticket() {
             className="input w-full font-bold"
             value={date}
             disabled
+          />
+          <label>Departure</label>
+          <input
+            type="text"
+            value={new Date(departureTime).toLocaleTimeString()}
+            disabled
+            className="input w-full"
+          />
+          <label>Arrival</label>
+          <input
+            type="text"
+            value={new Date(arrivalTime).toLocaleTimeString()}
+            disabled
+            className="input w-full"
           />
           <input
             type="text"

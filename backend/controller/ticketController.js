@@ -11,13 +11,24 @@ const getTicket = asyncHanlder(async (req, res) => {
     throw new Error("user not found");
   }
 
+  const tickets = await Ticket.find({ user: req.user.id });
+
   res.status(200);
-  res.json({ message: "ok" });
+  res.json(tickets);
 });
 
 const saveTicket = asyncHanlder(async (req, res) => {
-  const { airport, date, from, singlePrice, terminal, to, totalAmount } =
-    req.body;
+  const {
+    airport,
+    date,
+    from,
+    singlePrice,
+    terminal,
+    to,
+    totalAmount,
+    arrivalTime,
+    departureTime,
+  } = req.body;
 
   if (
     !airport ||
@@ -26,7 +37,9 @@ const saveTicket = asyncHanlder(async (req, res) => {
     !singlePrice ||
     !terminal ||
     !to ||
-    !totalAmount
+    !totalAmount ||
+    !arrivalTime ||
+    !departureTime
   ) {
     res.status(400);
     throw new Error("All fields not available");
@@ -46,6 +59,8 @@ const saveTicket = asyncHanlder(async (req, res) => {
     terminal,
     to,
     totalAmount,
+    arrivalTime,
+    departureTime,
     user: req.user.id,
   });
 

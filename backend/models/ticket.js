@@ -34,6 +34,14 @@ const ticketSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  arrivalTime: {
+    type: String,
+    required: true,
+  },
+  departureTime: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Ticket", ticketSchema);
