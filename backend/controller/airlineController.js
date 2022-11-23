@@ -3,7 +3,7 @@ const { db } = require("../models/airlineModel");
 const Airline = require("../models/airlineModel");
 
 const getAirlines = asyncHandler(async (req, res) => {
-  const { from, to } = req.body;
+  const { from, to, date } = req.body;
 
   const dbData = await Airline.find();
 

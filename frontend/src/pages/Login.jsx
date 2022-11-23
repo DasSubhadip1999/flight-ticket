@@ -1,7 +1,7 @@
 import { Spinner } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { reset, login } from "../features/auth/authSlice";
 
@@ -14,6 +14,7 @@ function Login() {
   const { isError, isSuccess, isLoading, message } = useSelector(
     (state) => state.auth
   );
+  const { airline } = useSelector((state) => state.airline);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,8 +22,10 @@ function Login() {
     if (isError) {
       toast.error(message);
     }
-    if (isSuccess) {
+    if (isSuccess && !airline) {
       navigate("/");
+    } else if (isSuccess && airline) {
+      navigate("/airlines");
     }
     dispatch(reset());
   });
@@ -88,6 +91,12 @@ function Login() {
             Login
           </button>
         </div>
+        <p className="text-center text-lg my-3">
+          Dont have an account?
+          <Link className="mx-2 link-primary" to="/register">
+            Register
+          </Link>
+        </p>
       </form>
     </>
   );

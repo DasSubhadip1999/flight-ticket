@@ -69,6 +69,7 @@ function TicketBook({ locations: [{ location }] }) {
     //console.log(formData);
     if (from.city !== to.city) {
       dispatch(findAirlines(formData));
+      localStorage.setItem("location", JSON.stringify(formData));
       navigate("/airlines");
     } else {
       toast.error("Please check locations");

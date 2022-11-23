@@ -3,23 +3,30 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineFlightTakeoff } from "react-icons/md";
+import BackButton from "../components/BackButton";
 
 function AirlinesList() {
   const { airline, isLoading } = useSelector((state) => state.airline);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isLoading && airline.length === 0) {
-      navigate("/");
-    }
-  }, []);
-
   if (isLoading) {
     return <SpinnerElm />;
   }
 
+  if (!isLoading && airline.length === 0) {
+    return (
+      <>
+        <BackButton url="/" />
+        <h1 className="text-center my-4 text-2xl font-bold">
+          No flights available!
+        </h1>
+      </>
+    );
+  }
+
   return (
     <div className="my-4">
+      <BackButton url="/" />
       <ul className="menu bg-base-100 w-full px-3">
         {airline.map(
           ({
@@ -31,7 +38,10 @@ function AirlinesList() {
             price,
           }) => (
             <li key={_id} className="my-2 rounded-md shadow-md">
-              <Link to="/ticket" className="flex flex-col items-start">
+              <Link
+                to={`/airlines/${_id}`}
+                className="flex flex-col items-start"
+              >
                 <div className="flex items-center">
                   <MdOutlineFlightTakeoff size={25} />
                   <h1 className="text-xl font-bold text-rgba(0,0,0,0.8) uppercase mx-2">

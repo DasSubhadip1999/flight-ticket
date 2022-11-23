@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { register, reset } from "../features/auth/authSlice";
@@ -131,6 +131,12 @@ function Register() {
         <div className="form-control w-full max-w-xs mt-4">
           <button className="btn btn-primary w-full">Register</button>
         </div>
+        <p className="text-center text-lg my-3">
+          Already have an account?
+          <Link className="mx-2 link-primary" to="/login">
+            Login
+          </Link>
+        </p>
       </form>
     </>
   );

@@ -4,6 +4,8 @@ import TicketBook from "../components/TicketBook";
 import { useEffect } from "react";
 import SpinnerElm from "../components/Spinner";
 import { Heading } from "@chakra-ui/react";
+import { FaUserAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function Home() {
   const { locations, isError, isSuccess, isLoading } = useSelector(
@@ -31,8 +33,12 @@ function Home() {
       <>
         {user && (
           <section className="px-4 my-2">
-            <h1 className="text-xl font-bold text-[rgba(0,0,0,0.7)]">
-              Profile:
+            <h1 className="text-xl font-bold text-[rgba(0,0,0,0.7)] flex justify-between">
+              <p>Profile:</p>
+              <Link to="/account" className="flex items-center">
+                <FaUserAlt className="mr-1" />
+                Account
+              </Link>
             </h1>
             <hr />
             <div className="form-control w-full max-w-xs">
